@@ -252,7 +252,7 @@
       align-items: center;
       gap: 10px;
     }
-  .search-item.premium.search-item-title {
+  .search-item.premium .search-item-title {
       display: flex;
       align-items: center;
       gap: 5px;
@@ -398,8 +398,7 @@
     }
 
   .live-section {
-      margin: 30px 4% 40px;
-      display: none;
+      margin: 180px 4% 40px; /* تم تعديل الهامش ليتناسب مع غياب البانر في بعض الأحيان */
     }
   .live-section.active { display: block; }
   .live-header {
@@ -426,7 +425,7 @@
       border-radius: 16px;
       overflow: hidden;
       position: relative;
-      padding-top: 56.25%;
+      padding-top: 56.25%; /* نسبة 16:9 */
       border: 2px solid rgba(212, 175, 55, 0.3);
       box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
     }
@@ -442,7 +441,7 @@
       font-size: 1.2rem;
       color: var(--gold-light);
     }
-  .container { max-width: 1600px; margin: 0 auto; padding: 0 4%; }
+  .container { max-width: 1600px; margin: 0 auto; padding: 0 4%; padding-bottom: 50px; }
   .section-title {
       font-size: 1.8rem;
       font-weight: 700;
@@ -518,7 +517,7 @@
       object-fit: cover;
       transition: 0.4s;
     }
-  .video-card:hover.video-thumb img { transform: scale(1.1); }
+  .video-card:hover .video-thumb img { transform: scale(1.1); }
   .play-icon {
       position: absolute;
       top: 50%;
@@ -530,7 +529,7 @@
       transition: 0.3s;
       filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
     }
-  .video-card:hover.play-icon { opacity: 1; }
+  .video-card:hover .play-icon { opacity: 1; }
   .video-info { padding: 18px; }
   .video-title {
       font-weight: 700;
@@ -547,6 +546,8 @@
       align-items: center;
     }
   .video-meta i { color: var(--gold); }
+  
+  /* نافذة عرض الفيديو (المشغل) */
   .player-modal {
       display: none;
       position: fixed;
@@ -559,17 +560,17 @@
       align-items: center;
       justify-content: center;
     }
-  .player-modal.active { display: flex; }
+  .player-modal.active { display: flex; animation: fadeIn 0.3s; }
   .player-box {
       width: 92%;
-      max-width: 1200px;
+      max-width: 1000px; /* عرض مناسب للفيديو */
       position: relative;
     }
   .close-player {
       position: absolute;
-      top: -50px;
-      left: 0;
-      font-size: 35px;
+      top: -40px;
+      right: 0;
+      font-size: 30px;
       color: var(--gold);
       cursor: pointer;
       transition: 0.3s;
@@ -577,20 +578,32 @@
   .close-player:hover { transform: rotate(90deg); color: var(--gold-light); }
   .video-player {
       width: 100%;
+      padding-top: 56.25%; /* نسبة 16:9 */
       border-radius: 12px;
       border: 2px solid rgba(212, 175, 55, 0.3);
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+  .video-player iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
   .player-actions {
       margin-top: 20px;
       display: flex;
       gap: 15px;
       align-items: center;
+      justify-content: space-between;
     }
   .download-btn {
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
       color: var(--black);
       border: none;
-      padding: 14px 30px;
+      padding: 10px 25px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 700;
@@ -611,59 +624,17 @@
       font-size: 1.5rem;
       font-weight: 700;
     }
-  .empty {
-      text-align: center;
-      padding: 80px 20px;
-      color: var(--text-muted);
-    }
-  .empty i {
-      font-size: 60px;
-      margin-bottom: 20px;
-      color: var(--gold);
-      opacity: 0.5;
-    }
-  .premium-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
-  .premium-modal.active { display: flex; }
-  .premium-box {
-      background: var(--card);
-      padding: 50px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 500px;
-      border: 2px solid var(--premium);
-      box-shadow: 0 20px 60px rgba(155, 89, 182, 0.4);
-    }
-  .premium-box i {
-      font-size: 80px;
-      color: var(--premium);
-      margin-bottom: 20px;
-    }
-  .premium-box h2 {
-      color: var(--gold-light);
-      margin-bottom: 15px;
-      font-size: 2rem;
-    }
-  .premium-box p {
-      color: var(--text-muted);
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.1); }
-    }
-    @media (max-width: 768px) {
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (max-width: 768px) {
     .search-box input { font-size: 14px; }
     .search-results { width: 100%; }
     .videos-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
@@ -674,10 +645,12 @@
     .hero-buttons { flex-direction: column; }
     .hero-btn { width: 100%; justify-content: center; }
     .hero-banner { margin-top: 145px; }
-    }
+    .live-section { margin-top: 150px; }
+  }
   </style>
 </head>
 <body>
+  <!-- الشريط العلوي -->
   <div class="navbar" id="navbar">
     <div class="nav-container">
       <div class="logo">3AZMA GOLD</div>
@@ -700,6 +673,7 @@
     </div>
   </div>
 
+  <!-- شريط البحث -->
   <div class="search-bar">
     <div class="search-container">
       <div class="search-box">
@@ -710,32 +684,41 @@
     </div>
   </div>
 
-  <div class="hero-banner" id="heroBanner" style="display: none;">
-    <div class="hero-bg" id="heroBg"></div>
-    <div class="hero-content">
-      <div class="hero-info">
-        <div class="hero-badge">
-          <i class="fas fa-fire"></i>
-          الأكثر مشاهدة
+  <!-- حاوية المحتوى الرئيسية -->
+  <div class="container">
+    
+    <!-- قسم البث المباشر -->
+    <div class="live-section active" id="liveSection">
+      <div class="live-header">
+        <div class="live-dot"></div>
+        <h2 class="live-title">البث المباشر حالياً</h2>
+      </div>
+      <div class="live-player">
+        <!-- يمكن استبدال الرابط أدناه برابط بث يوتيوب المباشر الخاص بك -->
+        <iframe src="https://www.youtube.com/embed/live_stream?channel=YOUR_CHANNEL_ID" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <h3 class="live-name">بث 3AZMA GOLD الحصري</h3>
+    </div>
+
+    <!-- قسم الفيديوهات (بتصميم بطاقات يوتيوب) -->
+    <h2 class="section-title"><i class="fas fa-film"></i> أحدث الفيديوهات</h2>
+    <div class="videos-grid" id="videosGrid">
+      
+      <!-- بطاقة فيديو 1 -->
+      <div class="video-card" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ', 'عنوان الفيديو الأول المثير')">
+        <div class="video-thumb">
+          <!-- صورة مصغرة (Thumbnail) -->
+          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="صورة الفيديو">
+          <i class="fas fa-play-circle play-icon"></i>
         </div>
-        <h1 class="hero-title" id="heroTitle"></h1>
-        <div class="hero-meta">
-          <span><i class="fas fa-star"></i> <span id="heroRating">9.5</span></span>
-          <span><i class="fas fa-calendar"></i> <span id="heroYear">2024</span></span>
-          <span><i class="fas fa-eye"></i> <span id="heroViews">0</span> مشاهدة</span>
-        </div>
-        <p class="hero-desc" id="heroDesc"></p>
-        <div class="hero-buttons">
-          <button class="hero-btn hero-btn-play" onclick="playHeroVideo()">
-            <i class="fas fa-play"></i> شاهد الآن
-          </button>
-          <button class="hero-btn hero-btn-info" onclick="scrollToVideos()">
-            <i class="fas fa-info-circle"></i> المزيد من المعلومات
-          </button>
+        <div class="video-info">
+          <h3 class="video-title">عنوان الفيديو الأول المثير</h3>
+          <div class="video-meta">
+            <span><i class="fas fa-eye"></i> 15K مشاهدة</span>
+            <span><i class="fas fa-clock"></i> قبل يومين</span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="container">
-    <div id="liveS
+      <!-- بطاقة فيديو 2 -->
+      <div class="video-card" onclick="openPlayer('https://www.youtube.com/embed/tg
